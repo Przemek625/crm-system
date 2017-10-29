@@ -105,3 +105,7 @@ ENV/
 
 # virtual environments
 .env
+
+#TODO: change it to psql
+# database
+db.sqlite3
