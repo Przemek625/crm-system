@@ -16,10 +16,16 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from companies.views import CompaniesListView, CompanyDetailView, CompanyDeleteView, CompanyCreateView, CompanyUpdateView
 from users.views import LoginView, RegistrationView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', LoginView.as_view(), name='login'),
     url(r'^registration/$', RegistrationView.as_view(), name='login'),
+    url(r'^companies/$', CompaniesListView.as_view(), name='companies'),
+    url(r'^companies/(?P<pk>\d+)$', CompanyDetailView.as_view(), name='company-detail'),
+    url(r'^delete-company/(?P<pk>\d+)$', CompanyDeleteView.as_view(), name='delete-company'),
+    url(r'^add-company/$', CompanyCreateView.as_view(), name='add-company'),
+    url(r'^update-company/(?P<pk>\d+)$', CompanyUpdateView.as_view(), name='update-company')
 ]
