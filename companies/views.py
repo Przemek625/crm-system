@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, UpdateView, CreateView, DetailView
 
+from companies.forms import CompanyForm
 from companies.models import Company
 
 
@@ -32,7 +33,20 @@ class CompanyCreateView(CreateView):
     """This view is responsible for adding companies."""
     model = Company
     template_name = 'add_or_update_company.html'
-    fields = '__all__'
+    form_class = CompanyForm
+    success_url = reverse_lazy('companies')
+
+    def form_valid(self, form):
+        """We override this method to determine currently log in user as the person that added the company."""
+        form.instance.added_by = self.request.user
+        return super().form_valid(form)
+
+
+class CompanyUpdateView(UpdateView):
+    """This view is responsible for updating companies."""
+    model = Company
+    template_name = 'add_or_update_company.html'
+    exclude = ('date_added', )
     success_url = reverse_lazy('companies')
 
 
@@ -41,18 +55,11 @@ class CompanyDeleteView(View):
     model = Company
     redirect_view_name = 'companies'
 
+    # TODO check if the object belongs to the user that makes the request.
     def post(self, request, pk):
         company = get_object_or_404(self.model, pk=pk)
         company.delete()
         return redirect(self.redirect_view_name)
-
-
-class CompanyUpdateView(UpdateView):
-    """This view is responsible for updating the companies."""
-    model = Company
-    template_name = 'add_or_update_company.html'
-    fields = '__all__'
-    success_url = reverse_lazy('companies')
 
 
 class JoinCompanyView(View):
