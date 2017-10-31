@@ -15,6 +15,7 @@ class Company(models.Model):
     street_number = models.CharField(max_length=255)
     date_added = models.DateField(auto_now=True)
     added_by = models.ForeignKey(to=get_user_model(), null=True, blank=True)
+    # last_edited = models.DateField(auto_now=True)
 
     class Meta:
         verbose_name_plural = "Companies"
@@ -31,5 +32,3 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
-
-

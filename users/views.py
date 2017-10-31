@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.views import View
 from django.contrib.auth import login, authenticate
+from django.views.generic import ListView
+from django.contrib.auth import get_user_model
 from users.forms import LoginForm
 
 
@@ -20,7 +22,11 @@ class LoginView(View):
             password = form.cleaned_data.get('password')
             # TODO handle fail of authentication
             user = authenticate(username=username, password=password)
-            login(request, user)
+            if user:
+                login(request, user)
+                return redirect('companies')
+            else:
+                return render(request, self.login_template, {'message': 'Invalid username or password.'})
         else:
             return render(request, self.login_template, {'form': self.login_form()})
 
@@ -37,8 +43,14 @@ class RegistrationView(View):
         form = self.registration_form(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, LoginView.login_template, {'register_success': True})
+            return redirect('registration')
         else:
             return render(request, self.registration_template, {'form': form})
 
 
+class UserListViews(ListView):
+    """This view is responsible for listing users."""
+    template_name = 'users.html'
+    model = get_user_model()
+    context_object_name = 'user_list'
+    paginate_by = 10

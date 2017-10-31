@@ -6,9 +6,10 @@ from django.views.generic import ListView, UpdateView, CreateView, DetailView
 
 from companies.forms import CompanyForm
 from companies.models import Company
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class CompaniesListView(ListView):
+class CompaniesListView(LoginRequiredMixin, ListView):
     """This view list companies."""
     template_name = 'companies.html'
     model = Company
@@ -16,7 +17,7 @@ class CompaniesListView(ListView):
     paginate_by = 10
 
 
-class CompanyDetailView(DetailView):
+class CompanyDetailView(LoginRequiredMixin, DetailView):
     """This view returns details of a company."""
     template_name = 'company_detail.html'
     context_object_name = 'company'
@@ -29,7 +30,7 @@ class CompanyDetailView(DetailView):
         return context
 
 
-class CompanyCreateView(CreateView):
+class CompanyCreateView(LoginRequiredMixin, CreateView):
     """This view is responsible for adding companies."""
     model = Company
     template_name = 'add_or_update_company.html'
@@ -42,7 +43,7 @@ class CompanyCreateView(CreateView):
         return super().form_valid(form)
 
 
-class CompanyUpdateView(UpdateView):
+class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     """This view is responsible for updating companies."""
     model = Company
     template_name = 'add_or_update_company.html'
@@ -50,7 +51,7 @@ class CompanyUpdateView(UpdateView):
     success_url = reverse_lazy('companies')
 
 
-class CompanyDeleteView(View):
+class CompanyDeleteView(LoginRequiredMixin, View):
     """This view is responsible for deleting companies."""
     model = Company
     redirect_view_name = 'companies'
@@ -64,7 +65,7 @@ class CompanyDeleteView(View):
         return HttpResponseForbidden()
 
 
-class JoinCompanyView(View):
+class JoinCompanyView(LoginRequiredMixin, View):
     """This view allows the user to join to a company."""
     def post(self, request):
         pass
