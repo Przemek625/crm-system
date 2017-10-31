@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -22,13 +23,12 @@ class CompanyDetailView(DetailView):
     model = Company
 
     def get_context_data(self, **kwargs):
-        # TODO add Company address to context.
+        # TODO add some feature like display
         context = super().get_context_data(**kwargs)
         context['test'] = 'test'
         return context
 
 
-# TODO implement who added the company
 class CompanyCreateView(CreateView):
     """This view is responsible for adding companies."""
     model = Company
@@ -55,11 +55,13 @@ class CompanyDeleteView(View):
     model = Company
     redirect_view_name = 'companies'
 
-    # TODO check if the object belongs to the user that makes the request.
     def post(self, request, pk):
         company = get_object_or_404(self.model, pk=pk)
-        company.delete()
-        return redirect(self.redirect_view_name)
+        # Check if the company is added by the user that makes the request.
+        if company.added_by == request.user:
+            company.delete()
+            return redirect(self.redirect_view_name)
+        return HttpResponseForbidden()
 
 
 class JoinCompanyView(View):
