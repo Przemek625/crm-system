@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 
 from companies.views import CompaniesListView, CompanyDetailView, CompanyDeleteView, CompanyCreateView, CompanyUpdateView
-from users.views import LoginView, RegistrationView
+from users.views import LoginView, RegistrationView, AddUserToCustomersView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,4 +30,6 @@ urlpatterns = [
     url(r'^add-company/$', CompanyCreateView.as_view(), name='add-company'),
     url(r'^update-company/(?P<pk>\d+)$', CompanyUpdateView.as_view(), name='update-company'),
     url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
+    url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
+    url(r'^add-user-to-customers/$', AddUserToCustomersView.as_view(), name='add_user_to_customers')
 ]

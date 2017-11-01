@@ -63,9 +63,3 @@ class CompanyDeleteView(LoginRequiredMixin, View):
             company.delete()
             return redirect(self.redirect_view_name)
         return HttpResponseForbidden()
-
-
-class JoinCompanyView(LoginRequiredMixin, View):
-    """This view allows the user to join to a company."""
-    def post(self, request):
-        pass

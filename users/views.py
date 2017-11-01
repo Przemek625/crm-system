@@ -1,9 +1,15 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponseForbidden
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
 from django.views import View
 from django.contrib.auth import login, authenticate
+from django.views.generic import CreateView
 from django.views.generic import ListView
 from django.contrib.auth import get_user_model
+
+from companies.models import CustomerToCompany
 from users.forms import LoginForm
 
 
@@ -53,3 +59,30 @@ class UserListViews(ListView):
     model = get_user_model()
     context_object_name = 'user_list'
     paginate_by = 10
+
+
+# TODO user can only add customer to companies that he created.
+class AddUserToCustomersView(LoginRequiredMixin, CreateView):
+    """This view adds the user to company customers."""
+    template_name = 'add_customer.html'
+    model = CustomerToCompany
+    success_url = reverse_lazy('users')
+
+    def get_form_kwargs(self):
+        """"We override this method..."""
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+
+class RemoveUserFromCustomersView(LoginRequiredMixin, View):
+    """This view removes the user from company customers."""
+    model = CustomerToCompany
+    redirect_view_name = 'users'
+
+    def post(self, request, customer_id):
+        customer_to_company = get_object_or_404(self.model, customer_id=customer_id)
+        if customer_to_company.company.added_by == request.user:
+            customer_to_company.delete()
+            return redirect(self.redirect_view_name)
+        return HttpResponseForbidden()
