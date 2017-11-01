@@ -1,3 +1,4 @@
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -5,9 +6,10 @@ from django.views.generic import ListView, UpdateView, CreateView, DetailView
 
 from companies.forms import CompanyForm
 from companies.models import Company
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class CompaniesListView(ListView):
+class CompaniesListView(LoginRequiredMixin, ListView):
     """This view list companies."""
     template_name = 'companies.html'
     model = Company
@@ -15,21 +17,20 @@ class CompaniesListView(ListView):
     paginate_by = 10
 
 
-class CompanyDetailView(DetailView):
+class CompanyDetailView(LoginRequiredMixin, DetailView):
     """This view returns details of a company."""
     template_name = 'company_detail.html'
     context_object_name = 'company'
     model = Company
 
     def get_context_data(self, **kwargs):
-        # TODO add Company address to context.
+        # TODO add some feature like display
         context = super().get_context_data(**kwargs)
         context['test'] = 'test'
         return context
 
 
-# TODO implement who added the company
-class CompanyCreateView(CreateView):
+class CompanyCreateView(LoginRequiredMixin, CreateView):
     """This view is responsible for adding companies."""
     model = Company
     template_name = 'add_or_update_company.html'
@@ -42,7 +43,7 @@ class CompanyCreateView(CreateView):
         return super().form_valid(form)
 
 
-class CompanyUpdateView(UpdateView):
+class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     """This view is responsible for updating companies."""
     model = Company
     template_name = 'add_or_update_company.html'
@@ -50,19 +51,15 @@ class CompanyUpdateView(UpdateView):
     success_url = reverse_lazy('companies')
 
 
-class CompanyDeleteView(View):
+class CompanyDeleteView(LoginRequiredMixin, View):
     """This view is responsible for deleting companies."""
     model = Company
     redirect_view_name = 'companies'
 
-    # TODO check if the object belongs to the user that makes the request.
     def post(self, request, pk):
         company = get_object_or_404(self.model, pk=pk)
-        company.delete()
-        return redirect(self.redirect_view_name)
-
-
-class JoinCompanyView(View):
-    """This view allows the user to join to a company."""
-    def post(self, request):
-        pass
+        # Check if the company is added by the user that makes the request.
+        if company.added_by == request.user:
+            company.delete()
+            return redirect(self.redirect_view_name)
+        return HttpResponseForbidden()
