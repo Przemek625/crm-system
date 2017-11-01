@@ -10,7 +10,7 @@ from django.views.generic import ListView
 from django.contrib.auth import get_user_model
 
 from companies.models import CustomerToCompany
-from users.forms import LoginForm
+from users.forms import LoginForm, CustomerToCompanyForm
 
 
 class LoginView(View):
@@ -61,15 +61,17 @@ class UserListViews(ListView):
     paginate_by = 10
 
 
-# TODO user can only add customer to companies that he created.
 class AddUserToCustomersView(LoginRequiredMixin, CreateView):
-    """This view adds the user to company customers."""
+    """
+    This view adds the user to company customers. Note that the user that makes the request can
+    only choose companies added by himself.
+    """
     template_name = 'add_customer.html'
     model = CustomerToCompany
     success_url = reverse_lazy('users')
+    form_class = CustomerToCompanyForm
 
     def get_form_kwargs(self):
-        """"We override this method..."""
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
