@@ -1,0 +1,29 @@
+.cutom-navbar {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.cutom-navbar > li > a {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.crm-logo {
+    height: 110px;
+}
+
+.crm-logo > img {
+    height: 80px;
+}
+
+.custom-form {
+    height: 320px;
+    padding-top: 40px;
+    font-size: large;
+    border: 1px solid #f1f1f1;
+
+}
+
+.log-footer{
+    padding-top: 15px;
+}
