@@ -31,7 +31,10 @@ class LoginView(View):
                 login(request, user)
                 return redirect('companies')
             else:
-                return render(request, self.login_template, {'message': 'Invalid username or password.'})
+                return render(request, self.login_template, {
+                    'message': 'Invalid username or password.',
+                    'form': self.login_form()
+                })
         else:
             return render(request, self.login_template, {'form': self.login_form()})
 

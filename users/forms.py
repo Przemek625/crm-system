@@ -5,7 +5,7 @@ from companies.models import CustomerToCompany, Company
 
 class LoginForm(forms.Form):
     username = forms.CharField()
-    password = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput())
 
 
 class CustomerToCompanyForm(forms.ModelForm):
