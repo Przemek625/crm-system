@@ -81,6 +81,9 @@ class AddUserToCustomersView(LoginRequiredMixin, CreateView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
+        user_id = self.kwargs['pk']
+        customer = User.objects.get(id=user_id)
+        kwargs['customer'] = customer
         return kwargs
 
     def form_valid(self, form):
