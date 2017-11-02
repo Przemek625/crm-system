@@ -29,7 +29,7 @@
                             <td>{{ user.last_name }}</td>
                             <td class="href-dec">
                                 <button type="button" class="btn btn-info" role="button">
-                                    <a href="">Mark user as Customer</a>
+                                    <a href="{% url 'add_user_to_customers' user.id %}">Add user to customers</a>
                                 </button>
                             </td>
                         </tr>

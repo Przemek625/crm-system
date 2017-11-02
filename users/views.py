@@ -7,10 +7,12 @@ from django.views import View
 from django.contrib.auth import login, authenticate
 from django.views.generic import CreateView
 from django.views.generic import ListView
-from django.contrib.auth import get_user_model
 
 from companies.models import CustomerToCompany
 from users.forms import LoginForm, CustomerToCompanyForm
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class LoginView(View):
@@ -78,6 +80,11 @@ class AddUserToCustomersView(LoginRequiredMixin, CreateView):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
         return kwargs
+
+    def form_valid(self, form):
+        user_id = self.kwargs['pk']
+        form.instance.customer = User.objects.get(id=user_id)
+        return super().form_valid(form)
 
 
 class RemoveUserFromCustomersView(LoginRequiredMixin, View):

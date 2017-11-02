@@ -32,6 +32,6 @@ urlpatterns = [
     url(r'^update-company/(?P<pk>\d+)$', CompanyUpdateView.as_view(), name='update-company'),
     url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
     url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
-    url(r'^add-user-to-customers/$', AddUserToCustomersView.as_view(), name='add_user_to_customers'),
-    url(r'^users/$', UserListViews.as_view(), name='users')
+    url(r'^add-user-to-customers/(?P<pk>\d+)$', AddUserToCustomersView.as_view(), name='add_user_to_customers'),
+    url(r'^users/$', UserListViews.as_view(), name='users'),
 ]

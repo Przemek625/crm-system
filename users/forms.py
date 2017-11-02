@@ -11,7 +11,7 @@ class LoginForm(forms.Form):
 class CustomerToCompanyForm(forms.ModelForm):
     class Meta:
         model = CustomerToCompany
-        fields = '__all__'
+        exclude = ('customer', )
 
     def __init__(self, *args, **kwargs):
         """
