@@ -33,7 +33,9 @@
                 <a href="{% url 'login' %}">Login</a>
             {% endif %}
             </li>
+            {% if not user.is_authenticated %}
             <li><a href="{% url 'registration' %}">Registration</a></li>
+            {% endif %}
             <li><a href="{% url 'companies' %}">Companies</a></li>
             <li><a href="{% url 'users' %}">Users</a></li>
             <li></li>
