@@ -135,3 +135,5 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_URL = 'login'
+
+STATIC_ROOT = '/home/przemek/crm-system/static'
