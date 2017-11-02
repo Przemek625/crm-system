@@ -27,10 +27,18 @@
                             <td>{{ user.email }}</td>
                             <td>{{ user.first_name }}</td>
                             <td>{{ user.last_name }}</td>
-                            <td class="href-dec">
-                                <button type="button" class="btn btn-info" role="button">
-                                    <a href="{% url 'add_user_to_customers' user.id %}">Add user to customers</a>
-                                </button>
+                            <td>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-info" role="button">
+                                        <a href="{% url 'add_user_to_customers' user.id %}">Add user to customers</a>
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-danger"
+                                            role="button"
+                                            onclick="location.href='{% url 'delete-user-from-customers' customer_id=user.id %}'">
+                                        Remove User from Customers
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}

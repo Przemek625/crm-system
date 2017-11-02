@@ -19,7 +19,7 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
     url(r'^add-user-to-customers/(?P<pk>\d+)$', AddUserToCustomersView.as_view(), name='add_user_to_customers'),
     url(r'^users/$', UserListViews.as_view(), name='users'),
-    url(r'^delete-user-from-customers/(?P<pk>\d+)$', RemoveUserFromCustomersView.as_view(),
+    url(r'^delete-user-from-customers/(?P<customer_id>\d+)$', RemoveUserFromCustomersView.as_view(),
         name='delete-user-from-customers'),
 
 ]

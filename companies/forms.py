@@ -1,9 +1,9 @@
-from django.forms import ModelForm
+from django import forms
 
 from companies.models import Company
 
 
-class CompanyForm(ModelForm):
+class CompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
