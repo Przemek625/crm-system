@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
@@ -74,6 +75,8 @@ class AddUserToCustomersView(LoginRequiredMixin, CreateView):
     model = CustomerToCompany
     success_url = reverse_lazy('users')
     form_class = CustomerToCompanyForm
+    error_message = 'This Customer has already been added to this company!' \
+                    ' Choose another company!'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -83,7 +86,11 @@ class AddUserToCustomersView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         user_id = self.kwargs['pk']
         form.instance.customer = User.objects.get(id=user_id)
-        return super().form_valid(form)
+        try:
+            return super().form_valid(form)
+        except IntegrityError:
+            form.add_error(None, self.error_message)
+            return self.form_invalid(form)
 
 
 class RemoveUserFromCustomersView(LoginRequiredMixin, View):
