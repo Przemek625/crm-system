@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Users</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Username</th>
+                        <th>Email Address</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in user_list %}
+                        <tr>
+                            <td></td>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.first_name }}</td>
+                            <td>{{ user.last_name }}</td>
+                            <td class="href-dec">
+                                <button type="button" class="btn btn-info" role="button">
+                                    <a href="">Mark user as Customer</a>
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer href-dec">
+                <nav class="text-center">
+                    <nav>
+                        <ul class="pagination">
+                            {% if page_obj.has_previous %}
+                                <li><a href="?page={{ page_obj.previous_page_number }}">
+                                    {% if not page_obj.has_previous %}<span aria-hidden="true">{% endif %}&laquo;
+                                    Previous</span><span class="sr-only">Previous</span></a></li>
+                            {% endif %}
+                            {% for page in paginator.page_range %}
+                                <li {% if page_obj.number == forloop.counter %}class="active"{% endif %}><a
+                                        href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                            {% endfor %}
+                            {% if page_obj.has_next %}
+                                <li><a href="?page={{ page_obj.next_page_number }}">{% if not page_obj.has_next %}
+                                    <span aria-hidden="true">{% endif %}Next &raquo;</span><span
+                                        class="sr-only">Next</span></a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}

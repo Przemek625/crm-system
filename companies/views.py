@@ -47,7 +47,7 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     """This view is responsible for updating companies."""
     model = Company
     template_name = 'add_or_update_company.html'
-    exclude = ('date_added', )
+    form_class = CompanyForm
     success_url = reverse_lazy('companies')
 
 
@@ -56,7 +56,7 @@ class CompanyDeleteView(LoginRequiredMixin, View):
     model = Company
     redirect_view_name = 'companies'
 
-    def post(self, request, pk):
+    def get(self, request, pk):
         company = get_object_or_404(self.model, pk=pk)
         # Check if the company is added by the user that makes the request.
         if company.added_by == request.user:

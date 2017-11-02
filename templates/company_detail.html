@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Companies</h1>
-<ul>
-     {{ test }}
-    <td>{{ company.name}}</td>
-    <td>{{ company.website }}</td>
-</ul>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block  content %}
+    {{ company.name }}<br>
+    {{ company.website }}<br>
+    {{ company.description }}<br>
+    {{ company.founded }}<br>
+    {{ company.is_active }}<br>
+    {{ company.category }}<br>
+
+    {{ company.city }}<br>
+    {{ company.city }}<br>
+    {{ company.city }}
+    {{ company.city }}
+    {{ company.city }}
+    {{ company.city }}
+
+{% endblock %}
