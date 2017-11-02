@@ -8,12 +8,15 @@
     {{ company.founded }}<br>
     {{ company.is_active }}<br>
     {{ company.category }}<br>
+    {{ company.city }}<br>
+    {{ company.region }}<br>
+    {{ company.street }}<br>
+    {{ company.street_number }}<br>
+    {{ company.date_added }}<br>
+    {{ company.added_by }}
 
-    {{ company.city }}<br>
-    {{ company.city }}<br>
-    {{ company.city }}
-    {{ company.city }}
-    {{ company.city }}
-    {{ company.city }}
+    {%  for customer in company.customers.all %}
+        {{ customer }}
+    {% endfor %}
 
 {% endblock %}
