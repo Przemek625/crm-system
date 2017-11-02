@@ -16,7 +16,6 @@ urlpatterns = [
     url(r'^add-company/$', CompanyCreateView.as_view(), name='add-company'),
     url(r'^update-company/(?P<pk>\d+)$', CompanyUpdateView.as_view(), name='update-company'),
     url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
-    url(r'^logout/$', LogoutView.as_view(next_page='login'), name='logout'),
     url(r'^add-user-to-customers/(?P<pk>\d+)$', AddUserToCustomersView.as_view(), name='add_user_to_customers'),
     url(r'^users/$', UserListViews.as_view(), name='users'),
     url(r'^delete-user-from-customers/(?P<customer_id>\d+)$', RemoveUserFromCustomersView.as_view(),

@@ -52,12 +52,12 @@ class RegistrationView(View):
         form = self.registration_form(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('registration')
+            return redirect('login')
         else:
             return render(request, self.registration_template, {'form': form})
 
 
-class UserListViews(ListView):
+class UserListViews(LoginRequiredMixin, ListView):
     """This view is responsible for listing users."""
     template_name = 'users.html'
     model = get_user_model()
