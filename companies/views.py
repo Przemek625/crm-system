@@ -1,5 +1,5 @@
 from django.http import HttpResponseForbidden
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, UpdateView, CreateView, DetailView
@@ -26,7 +26,6 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         # TODO add some feature like display
         context = super().get_context_data(**kwargs)
-        context['test'] = 'test'
         return context
 
 

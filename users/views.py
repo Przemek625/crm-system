@@ -92,7 +92,7 @@ class RemoveUserFromCustomersView(LoginRequiredMixin, View):
     model = CustomerToCompany
     redirect_view_name = 'users'
 
-    def post(self, request, customer_id):
+    def get(self, request, customer_id):
         customer_to_company = get_object_or_404(self.model, customer_id=customer_id)
         if customer_to_company.company.added_by == request.user:
             customer_to_company.delete()
