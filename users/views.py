@@ -108,9 +108,9 @@ class RemoveUserFromCustomersView(LoginRequiredMixin, View):
 
     def post(self, request, customer_id):
         customer = User.objects.get(id=customer_id)
-        form = CustomerToCompanyDeleteForm(request.POST)
+        form = CustomerToCompanyDeleteForm(request.POST, customer_id=customer_id)
         if form.is_valid():
-            CustomerToCompany.objects.get(company=form['company'], customer=customer).delete()
+            CustomerToCompany.objects.get(company=form.data['company'], customer=customer).delete()
             return redirect(self.redirect_view_name)
         else:
             return render(request, self.template_name, {'form': form, 'customer': customer})
