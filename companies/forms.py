@@ -1,10 +1,10 @@
-from django.forms import ModelForm
+from django import forms
 
 from companies.models import Company
 
 
-class CompanyForm(ModelForm):
+class CompanyForm(forms.ModelForm):
 
     class Meta:
         model = Company
-        exclude = ['date_added']
+        exclude = ['date_added', 'added_by', 'customers']

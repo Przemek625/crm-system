@@ -1,0 +1,45 @@
+.cutom-navbar {
+    font-size: xx-large;
+    font-weight: bold;
+}
+
+.cutom-navbar > li > a {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.crm-logo {
+    height: 110px;
+}
+
+.crm-logo > img {
+    height: 80px;
+}
+
+.custom-form {
+    height: 400px;
+    padding-top: 40px;
+    font-size: large;
+    /*border: 1px solid #f1f1f1;*/
+
+}
+
+.log-footer{
+    padding-top: 15px;
+}
+
+.href-dec >button >a {
+    color: #FFFFFF;
+    text-decoration: none;
+}
+
+.footer{
+    padding-top: 100px;
+    bottom:0;
+    left:0;
+
+}
+
+/*.registration-form{*/
+    /*height: 600px;*/
+/*}*/

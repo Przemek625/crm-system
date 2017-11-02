@@ -1,5 +1,5 @@
 from django.http import HttpResponseForbidden
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, UpdateView, CreateView, DetailView
@@ -26,7 +26,6 @@ class CompanyDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         # TODO add some feature like display
         context = super().get_context_data(**kwargs)
-        context['test'] = 'test'
         return context
 
 
@@ -47,7 +46,7 @@ class CompanyUpdateView(LoginRequiredMixin, UpdateView):
     """This view is responsible for updating companies."""
     model = Company
     template_name = 'add_or_update_company.html'
-    exclude = ('date_added', )
+    form_class = CompanyForm
     success_url = reverse_lazy('companies')
 
 
@@ -56,7 +55,7 @@ class CompanyDeleteView(LoginRequiredMixin, View):
     model = Company
     redirect_view_name = 'companies'
 
-    def post(self, request, pk):
+    def get(self, request, pk):
         company = get_object_or_404(self.model, pk=pk)
         # Check if the company is added by the user that makes the request.
         if company.added_by == request.user:

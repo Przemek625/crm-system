@@ -1,28 +1,84 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>Companies</h1>
-<ul>
-    {% for company in company_list %}
-        <li>
-            <tr>
-                <td>{{ company.name }}</td>
-                <td>{{ company.website }}</td>
-                <td><a href="{% url 'company-detail' pk=company.id %}">Details</a></td>
-                <td><a href="{% url 'update-company' pk=company.id %}">Update Company</a></td>
-                <td>
-                    <form action="{% url 'delete-company' pk=company.id %}" method="post">{% csrf_token %}
-                    <input type="submit" value="Delete"/>
-                    </form></td>
-                </tr>
-        </li>
-    {% endfor %}
-</ul>
-<h2>Add Company</h2>
-<a href="{% url 'add-company' %}">Add company</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4>Companies</h4>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Website</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for company in company_list %}
+                        <tr>
+                            <td></td>
+                            <td>{{ company.name }}</td>
+                            <td><a href="{{ company.website }}">{{ company.website }}</a></td>
+                            <td>
+                                <div class="btn-group href-dec">
+                                    <button type="button"
+                                            class="btn btn-info"
+                                            role="button"
+                                            onclick="location.href='{% url 'company-detail' pk=company.id %}'">
+                                        Details
+                                    </button>
+                                    <button type="button"
+                                            class="btn btn-warning"
+                                            role="button"
+                                            onclick="location.href='{% url 'update-company' pk=company.id %}'">
+                                        Update Company
+                                    </button>
+                                    <button type="submit"
+                                            class="btn btn-danger"
+                                            role="button"
+                                            onclick="location.href='{% url 'delete-company' pk=company.id %}'">
+                                            Delete
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="panel-footer href-dec">
+                <nav class="text-center">
+                        <nav>
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li><a href="?page={{ page_obj.previous_page_number }}">
+                                        {% if not page_obj.has_previous %}<span aria-hidden="true">{% endif %}&laquo;
+                                        Previous</span><span class="sr-only">Previous</span></a></li>
+                                {% endif %}
+                                {% for page in paginator.page_range %}
+                                    <li {% if page_obj.number == forloop.counter %}class="active"{% endif %}><a
+                                            href="?page={{ forloop.counter }}">{{ forloop.counter }}</a></li>
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li><a href="?page={{ page_obj.next_page_number }}">{% if not page_obj.has_next %}
+                                        <span aria-hidden="true">{% endif %}Next &raquo;</span><span class="sr-only">Next</span></a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                </nav>
+                <button type="submit"
+                        class="btn btn-success"
+                        role="button"
+                        onclick="location.href='{% url 'add-company' %}'">
+                        Add Company
+                </button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

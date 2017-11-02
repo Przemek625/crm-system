@@ -60,6 +60,13 @@ class CustomerToCompany(models.Model):
     date_added = models.DateField(auto_now=True)
     description = models.CharField(max_length=255)
 
+    def __str__(self):
+        return "{} to {}".format(self.customer, self.company)
+
+    class Meta:
+        verbose_name_plural = "Customers of companies"
+        unique_together = ('customer', 'company')
+
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
