@@ -78,12 +78,16 @@ class AddUserToCustomersView(LoginRequiredMixin, CreateView):
     error_message = 'This Customer has already been added to this company!' \
                     ' Choose another company!'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_id = self.kwargs['pk']
+        customer = User.objects.get(id=user_id)
+        context['customer'] = customer
+        return context
+
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['user'] = self.request.user
-        user_id = self.kwargs['pk']
-        customer = User.objects.get(id=user_id)
-        kwargs['customer'] = customer
         return kwargs
 
     def form_valid(self, form):
