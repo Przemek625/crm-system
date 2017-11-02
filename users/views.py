@@ -105,4 +105,3 @@ class RemoveUserFromCustomersView(LoginRequiredMixin, View):
         customer = User.objects.get(id=customer_id)
         form = CustomerToCompanyDeleteForm(customer_id=customer_id)
         return render(request, self.template_name, {'form': form, 'customer': customer})
-

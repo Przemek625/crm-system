@@ -25,15 +25,23 @@
                             <td><a href="{{ company.website }}">{{ company.website }}</a></td>
                             <td>
                                 <div class="btn-group href-dec">
-                                    <button type="button" class="btn btn-info" role="button">
-                                        <a href="{% url 'company-detail' pk=company.id %}">Details</a>
+                                    <button type="button"
+                                            class="btn btn-info"
+                                            role="button"
+                                            onclick="location.href='{% url 'company-detail' pk=company.id %}'">
+                                        Details
                                     </button>
-                                    <button type="button" class="btn btn-warning" role="button">
-                                        <a href="{% url 'update-company' pk=company.id %}">Update Company</a>
+                                    <button type="button"
+                                            class="btn btn-warning"
+                                            role="button"
+                                            onclick="location.href='{% url 'update-company' pk=company.id %}'">
+                                        Update Company
                                     </button>
-                                    <button type="submit" class="btn btn-danger">
-                                        <a href="{% url 'delete-company' pk=company.id %}">Delete</a>
-
+                                    <button type="submit"
+                                            class="btn btn-danger"
+                                            role="button"
+                                            onclick="location.href='{% url 'delete-company' pk=company.id %}'">
+                                            Delete
                                     </button>
                                 </div>
                             </td>
@@ -64,8 +72,11 @@
                             </ul>
                         </nav>
                 </nav>
-                <button type="button" class="btn btn-success" role="button">
-                    <a href="{% url 'add-company' %}">Add Company</a>
+                <button type="submit"
+                        class="btn btn-success"
+                        role="button"
+                        onclick="location.href='{% url 'add-company' %}'">
+                        Add Company
                 </button>
             </div>
         </div>

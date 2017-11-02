@@ -29,14 +29,17 @@
                             <td>{{ user.last_name }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-info" role="button">
-                                        <a href="{% url 'add_user_to_customers' user.id %}">Add user to customers</a>
+                                    <button type="button"
+                                            class="btn btn-info"
+                                            role="button"
+                                            onclick="location.href='{% url 'add_user_to_customers' user.id %}'">
+                                        Add to Customers
                                     </button>
                                     <button type="button"
                                             class="btn btn-danger"
                                             role="button"
-                                            onclick="location.href='{% url 'delete-user-from-customers' customer_id=user.id %}'">
-                                        Remove User from Customers
+                                            onclick="location.href='{% url 'delete-user-from-customers' user.id %}'">
+                                        Remove from Customers
                                     </button>
                                 </div>
                             </td>
