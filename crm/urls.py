@@ -1,11 +1,13 @@
 from django.conf.urls import url
 from django.contrib import admin
 from django.contrib.auth.views import LogoutView
+from graphene_django.views import GraphQLView
 
 from companies.views import CompaniesListView, CompanyDetailView, CompanyDeleteView, CompanyCreateView,\
     CompanyUpdateView
 from users.views import LoginView, RegistrationView, AddUserToCustomersView, UserListViews, RemoveUserFromCustomersView
 
+from companies.schema import schema
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', LoginView.as_view(), name='login'),
@@ -20,5 +22,6 @@ urlpatterns = [
     url(r'^users/$', UserListViews.as_view(), name='users'),
     url(r'^delete-user-from-customers/(?P<customer_id>\d+)$', RemoveUserFromCustomersView.as_view(),
         name='delete-user-from-customers'),
+    url(r'^graphql', GraphQLView.as_view(graphiql=True, schema=schema)),
 
 ]

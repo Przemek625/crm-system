@@ -16,3 +16,5 @@ psycopg2==2.7.3.1
 # Image support
 easy-thumbnails==2.4.1
 
+# Graphne
+graphene-django>=2.0
